@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const path = require('path');
 
-const FILE_URL = 'file:///' + path.resolve(__dirname, 'shopping-list.html').replace(/\\/g, '/');
+const FILE_URL = 'file:///' + path.resolve(__dirname, 'index.html').replace(/\\/g, '/');
 
 // 결과 집계
 const results = [];
@@ -108,7 +108,7 @@ async function runTests() {
   // ── 테스트 7: 체크 해제 ──────────────────────────────────────
   try {
     const checkbox = await page.locator('li').first().locator('input[type="checkbox"]');
-    await checkbox.click(); // 다시 클릭해 해제
+    await checkbox.click();
     await page.waitForTimeout(300);
     const isChecked = await checkbox.isChecked();
     const liClass   = await page.locator('li').first().getAttribute('class');
@@ -124,7 +124,7 @@ async function runTests() {
   // ── 테스트 8: summary 카운트 업데이트 ───────────────────────
   try {
     const checkbox = await page.locator('li').first().locator('input[type="checkbox"]');
-    await checkbox.click(); // 첫 번째 항목 체크
+    await checkbox.click();
     await page.waitForTimeout(300);
     const summary = await page.locator('#summary').textContent();
     if (summary.includes('3') && summary.includes('1')) {
@@ -166,7 +166,7 @@ async function runTests() {
 
   // ── 테스트 11: 개별 삭제 버튼 ───────────────────────────────
   try {
-    const beforeCount = await page.locator('li').count(); // 2
+    const beforeCount = await page.locator('li').count();
     await page.locator('li').first().locator('.delete-btn').click();
     await page.waitForTimeout(300);
     const afterCount = await page.locator('li').count();
